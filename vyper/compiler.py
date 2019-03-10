@@ -7,6 +7,7 @@ from vyper.signatures.interface import (
     extract_interface_str,
     extract_external_interface,
 )
+from vyper.parser import ast
 
 
 def __compile(code, interface_codes=None, *args, **kwargs):
@@ -173,6 +174,10 @@ def _mk_opcodes_runtime(code, contract_name, interface_codes):
     return get_opcodes(code, contract_name, bytecodes_runtime=True, interface_codes=interface_codes)
 
 
+def _mk_ast(code, contract_name, interface_codes):
+    return ast.parse_to_json(code, contract_name, interface_codes)
+
+
 output_formats_map = {
     'abi': _mk_abi_output,
     'bytecode': _mk_bytecode_output,
@@ -185,6 +190,7 @@ output_formats_map = {
     'external_interface': _mk_external_interface_output,
     'opcodes': _mk_opcodes,
     'opcodes_runtime': _mk_opcodes_runtime,
+    'ast': _mk_ast
 }
 
 
